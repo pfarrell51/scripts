@@ -12,7 +12,7 @@ END          {  printHtml( fs, h, w ) }
 
 function printHtml(f, h, w) {
  	fs = f
-    gsub("\.(jpg|png)","",fs)
+    sub("\.(jpg|png)","",fs)
     printf "%s <p><img src=\"XYZZY/%s\" width=\"%d\" width=\"%d\"><p><hr>\n", fs, f, h, w 
 }
 
