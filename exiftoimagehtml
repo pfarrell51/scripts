@@ -1,17 +1,19 @@
 # exiftoimagehtml
 # take putput of exiftool on a directory of png and jpg files and generate a HTML page
 # exiftool -ImageHeight -ImageWidth * | awk -f exiftoimagehtml
-# exiftool -ImageHeight -ImageWidth *.jpg *.png | awk -f ~/whome/sandbox/scripts/exiftoimagehtml
+# exiftool -ImageHeight -ImageWidth *.jpg *.png | awk -f 
+#         ~/whome/sandbox/scripts/exiftoimagehtml
 
   /=====/ { if (h > 0 ) {  printHtml( fs,  h, w ) }
-             h=0; w=0; fs = $2
-          }
+             h=0; w=0; fs = "" 
+             for (i=2; i<=NF; i++) fs = (fs " " $i)
+           }
   /Image Height/ { h = $4  }
   /Image Width/ {  w = $4  }
 END          {  printHtml( fs, h, w ) }
 
 function printHtml(f, h, w) {
- 	fs = fi
+ 	fs = f
         hs = h
         ws = w
     if (w > 800) {
