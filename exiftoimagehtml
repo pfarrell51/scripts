@@ -7,6 +7,7 @@
   /=====/ { if (h > 0 ) {  printHtml( fs,  h, w ) }
              h=0; w=0; fs = "" 
              for (i=2; i<=NF; i++) fs = (fs " " $i)
+             sub("^ ","",fs)
            }
   /Image Height/ { h = $4  }
   /Image Width/ {  w = $4  }
@@ -14,14 +15,17 @@ END          {  printHtml( fs, h, w ) }
 
 function printHtml(f, h, w) {
  	fs = f
-        hs = h
-        ws = w
+    hs = h
+    ws = w
+    sub(".(jpg|png)","",fs)
+    sub("_"," ",fs)
     if (w > 800) {
-	squish = 800/w
+ 	    squish = 800/w
         hs = h*squish
         ws = w*squish
+        printf "%s <p><a href=\"XYZZY/%s\"><img src=\"XYZZY/%s\" height=\"%d\" width=\"%d\"></a><p><hr>\n", fs, f, f, hs, ws 
+     } else {
+        printf "%s <p><img src=\"XYZZY/%s\" height=\"%d\" width=\"%d\"><p><hr>\n", fs, f, hs, ws 
      }
-    sub(".(jpg|png)","",fs)
-    printf "%s <p><a href=%s><img src=\"XYZZY/%s\" height=\"%d\" width=\"%d\"></a><p><hr>\n", fs, f, f, hs, ws 
 }
 
